@@ -82,22 +82,33 @@ CREATE TRIGGER notification_trigger ON users
 FROM inserted
 
 end
+-- updating password 
+
+create procedure changepassword
+@userid int,
+@password varchar (100)
+as
+begin
+update users
+set password = @password
+where userid = @userid
+end
 
 
-
-
-
-
-
-
-
-
+--deleting a profile picture
+create procedure deleteprofilepic
+@userid int 
+as
+begin
+UPDATE users
+SET imageurl = NULL
+WHERE id = @userid;
+end
 
 
 create trigger notification
 on users
 after insert
-
 as
 begin
 declare @firstname,
@@ -106,6 +117,5 @@ declare @username,
 declare@email,
 declare@password,
 declare@imageurl
-
 select * on inserted from users
 end

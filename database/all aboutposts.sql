@@ -34,3 +34,36 @@ SELECT *
 FROM posts
 
 SELECT * FROM vw_posts
+
+
+--post from followed people
+
+
+CREATE PROCEDURE GetPostsByUserId
+    @userid int
+AS
+BEGIN
+    SELECT *
+    FROM posts
+    WHERE userid IN (SELECT userid FROM followers WHERE followerid = @userid)
+END
+
+EXEC GetPostsByUserId @userid = your_user_id
+
+
+-- CREATE VIEW PostsByUserId AS
+--     SELECT *
+--     FROM posts
+--     WHERE userid IN (SELECT userid FROM followers WHERE followerid = @userid
+
+
+-- geting post made by a certain userid
+
+create procedure mypost
+@userid int
+as
+begin
+SELECT *
+FROM posts 
+WHERE userid = @userid
+end
